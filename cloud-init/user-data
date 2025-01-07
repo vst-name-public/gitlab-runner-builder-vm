@@ -1,0 +1,55 @@
+#cloud-config
+hostname: gitlab-runner
+ssh_pwauth: true
+
+package_update: true
+package_upgrade: true
+package_reboot_if_required: false
+
+groups:
+- docker
+users:
+- name: gitlab-runner
+  groups: [ docker, sudo ]
+  plain_text_passwd: packer
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  shell: /bin/bash
+  lock_passwd: false
+
+ssh:
+  emit_keys_to_console: false
+
+growpart:
+  mode: auto
+  devices: [ "/" ]
+  ignore_growroot_disabled: false
+
+packages:
+- qemu-guest-agent
+- lsb-release
+- openssh-server
+- ca-certificates
+- apt-transport-https
+- coreutils
+- snapd
+- git
+- curl
+- wget
+- gnupg2
+- zip
+- unzip
+- rar
+- unrar
+- jq
+- yq
+- tar
+- ssh
+
+# network:
+#   version: 2
+#   ethernets:
+#     eth0:
+#       dhcp4: true
+#       nameservers:
+#         search: [ . ]
+#         addresses: [ 8.8.8.8, 10.96.0.10 ]

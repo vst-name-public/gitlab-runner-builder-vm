@@ -1,0 +1,2 @@
+instance-id: packer-instance
+local-hostname: gitlab-runner
